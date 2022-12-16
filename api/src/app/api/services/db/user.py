@@ -8,8 +8,8 @@ class UserService:
     def __init__(self):
         self.database = database
 
-    async def get_user_by_tg_id(self, tg_id: str):
-        query = User.__table__.select().where(User.tg_id == tg_id)
+    async def get_user_by_tg_id(self, telegram_id: str):
+        query = User.__table__.select().where(User.telegram_id == telegram_id)
         user = await self.database.fetch_one(query)
         return user
 
