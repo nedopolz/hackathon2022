@@ -3,11 +3,13 @@ from fastapi import FastAPI
 
 from api.routers.portfolio import router as portfolio_router
 from api.routers.questions import router as question_router
+from api.routers.user import router as user_router
 from db import database
 
 app = FastAPI()
 app.include_router(question_router)
 app.include_router(portfolio_router)
+app.include_router(user_router)
 
 
 @app.on_event("startup")
