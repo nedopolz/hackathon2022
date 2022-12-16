@@ -40,6 +40,7 @@ class QuestionsAnswer(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     question_id = Column(Integer, ForeignKey("question.id"), nullable=False)
     answer_id = Column(Integer, ForeignKey("answer.id"), nullable=False)
+    portfolio_id = Column(Integer, ForeignKey("portfolio.id"), nullable=False)
 
     question = relationship("Question", back_populates="question_answer")
     answer = relationship("Answer", back_populates="question_answer")
@@ -51,7 +52,6 @@ class Portfolio(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
-    questions_answer_id = Column(Integer, ForeignKey("questions_answer.id"), nullable=False)
     portfolio_risk_degree = Column(Float)
     acceptable_risk_degree = Column(Float)
 
