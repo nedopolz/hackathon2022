@@ -3,7 +3,7 @@ from functools import lru_cache
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from api.models.models import Question, Answer
+from api.models.models import Question, Answer, QuestionsAnswer
 from api.schemas.question import QuestionAndHisAnswer, QuestionSchema, AnswerSchema
 from db import database
 
@@ -30,6 +30,19 @@ class QuestionsService:
         ]
 
 
+class AnswerService:
+    def __init__(self):
+        self.database = database
+
+    # async def save_question_answer(self, answer_id, question_id, portfolio_id):
+    #     query = QuestionsAnswer.__table__.insert().values(answer_id=answer_id, question_id=question_id, portfolio_id=portfolio_id)
+
+
 @lru_cache()
 def get_questions_service():
     return QuestionsService()
+
+
+@lru_cache()
+def get_answer_service():
+    return AnswerService()
