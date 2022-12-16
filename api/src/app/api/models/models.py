@@ -22,7 +22,7 @@ class Question(Base):
     question = Column(String)
 
     answer = relationship("Answer", back_populates="question")
-    questions_answer = relationship("QuestionsAnswer", back_populates="question")
+    question_answer = relationship("QuestionsAnswer", back_populates="question")
 
 
 class Answer(Base):
@@ -31,8 +31,8 @@ class Answer(Base):
     answer = Column(String)
     question_id = Column(Integer, ForeignKey("question.id"), nullable=False)
 
-    questions = relationship("Question", back_populates="question")
-    questions_answer = relationship("QuestionsAnswer", back_populates="answer")
+    question = relationship("Question", back_populates="answer")
+    question_answer = relationship("QuestionsAnswer", back_populates="answer")
 
 
 class QuestionsAnswer(Base):
@@ -41,7 +41,7 @@ class QuestionsAnswer(Base):
     question_id = Column(Integer, ForeignKey("question.id"), nullable=False)
     answer_id = Column(Integer, ForeignKey("answer.id"), nullable=False)
 
-    questions = relationship("Question", back_populates="question_answer")
+    question = relationship("Question", back_populates="question_answer")
     answer = relationship("Answer", back_populates="question_answer")
     portfolio = relationship("Portfolio", back_populates="question_answer")
 
@@ -57,7 +57,7 @@ class Portfolio(Base):
 
     user = relationship("User", back_populates="portfolio")
     instrument_portfolio = relationship("InstrumentPortfolio", back_populates="portfolio")
-    questions_answer = relationship("QuestionsAnswer", back_populates="portfolio")
+    question_answer = relationship("QuestionsAnswer", back_populates="portfolio")
 
 
 class InstrumentType(Base):
