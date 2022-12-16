@@ -1,7 +1,7 @@
 from functools import lru_cache
 
-from src.app.api.models.models import User
-from src.app.db import database
+from api.models.models import User
+from db import database
 
 
 class UserService:
