@@ -72,7 +72,7 @@ class Instrument(Base):
     __tablename__ = "instrument"
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String)
-    instrument_type_degree = Column(Float)
+    instrument_degree = Column(Float)
     instrument_type_id = Column(Integer, ForeignKey("instrument_type.id"), nullable=False)
     amount = Column(Integer)
     price = Column(Float)
