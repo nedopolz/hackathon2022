@@ -11,7 +11,7 @@ Base = declarative_base(metadata=metadata)
 class User(Base):
     __tablename__ = "users"
     id = Column(Integer, primary_key=True, autoincrement=True)
-    tg_id = Column(Integer, nullable=True)
+    tg_id = Column(String, nullable=True)
 
     portfolio = relationship("Portfolio", back_populates="user")
 
