@@ -12,6 +12,7 @@ class User(Base):
     __tablename__ = "users"
     id = Column(Integer, primary_key=True, autoincrement=True)
     tg_id = Column(Integer, nullable=True)
+<<<<<<< HEAD
 
     portfolio = relationship("Portfolio", back_populates="user")
 
@@ -87,3 +88,5 @@ class InstrumentPortfolio(Base):
 
     instrument = relationship("Instrument", back_populates="instrument_portfolio")
     portfolio = relationship("Portfolio", back_populates="instrument_portfolio")
+=======
+>>>>>>> origin/api
