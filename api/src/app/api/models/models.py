@@ -49,6 +49,7 @@ class QuestionsAnswer(Base):
 class Portfolio(Base):
     __tablename__ = "portfolio"
     id = Column(Integer, primary_key=True, autoincrement=True)
+    name = Column(String)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     questions_answer_id = Column(Integer, ForeignKey("questions_answer.id"), nullable=False)
     portfolio_risk_degree = Column(Float)
