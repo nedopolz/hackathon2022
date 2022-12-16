@@ -1,3 +1,4 @@
+from databases import Database
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import declarative_base, sessionmaker
 
@@ -6,3 +7,5 @@ from settings import settings
 engine = create_async_engine(settings.database_url, future=True, echo=True)
 async_session = sessionmaker(engine, expire_on_commit=False, class_=AsyncSession, future=True)
 Base = declarative_base()
+
+database = Database(settings.database_url, min_size=5, max_size=20)
