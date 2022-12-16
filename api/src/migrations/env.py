@@ -10,7 +10,7 @@ from sqlalchemy.ext.asyncio import AsyncEngine
 
 from alembic import context
 
-from app.api.models.user import metadata
+from app.api.models.models import metadata
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
