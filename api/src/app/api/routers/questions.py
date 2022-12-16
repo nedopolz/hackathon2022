@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
+from starlette.responses import JSONResponse
 
 from api.schemas.question import QuestionAndHisAnswer, QuestionAndAnswer
 from api.services.db.questions import get_questions_service, get_answer_service
@@ -16,8 +17,15 @@ async def get_questions(
     return questions
 
 
-@router.get("/save", description="Сохранить ответы на вопросы")
+@router.post("/save", description="Сохранить ответы на вопросы")
 async def save_answers(
-    answer_service=Depends(get_answer_service)
+    question_and_answer: QuestionAndAnswer, answer_service=Depends(get_answer_service)
 ):
-    await answer_service.save_question_answer(1, 2, 1)
+    q_a = answer_service.save_question_answer(
+        **question_and_answer.dict()
+    )
+
+    if q_a:
+        return JSONResponse({"success": True})
+
+    return JSONResponse({"success": False})
