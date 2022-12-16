@@ -14,7 +14,7 @@ class InstrumentSchema(BaseModel):
     name: str
     amount: int
     price: float
-    type: InstrumentTypeSchema
+    # type: InstrumentTypeSchema
 
 
 class InstrumentRiskDegree(InstrumentSchema):
