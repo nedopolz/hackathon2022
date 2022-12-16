@@ -74,6 +74,8 @@ class Instrument(Base):
     name = Column(String)
     instrument_type_degree = Column(Float)
     instrument_type_id = Column(Integer, ForeignKey("instrument_type.id"), nullable=False)
+    amount = Column(Integer)
+    price = Column(Float)
 
     instrument_portfolio = relationship("InstrumentPortfolio", back_populates="instrument")
     instrument_type = relationship("InstrumentType", back_populates="instrument")
