@@ -34,8 +34,13 @@ class AnswerService:
     def __init__(self):
         self.database = database
 
-    # async def save_question_answer(self, answer_id, question_id, portfolio_id):
-    #     query = QuestionsAnswer.__table__.insert().values(answer_id=answer_id, question_id=question_id, portfolio_id=portfolio_id)
+    async def save_question_answer(self, answer_id, question_id, portfolio_id):
+        query = QuestionsAnswer.__table__.insert().values(
+            answer_id=answer_id, question_id=question_id, portfolio_id=portfolio_id
+        )
+        saved_question_answer = await self.database.execute(query)
+
+        return saved_question_answer
 
 
 @lru_cache()
