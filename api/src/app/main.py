@@ -1,10 +1,11 @@
 import uvicorn
 from fastapi import FastAPI
 
-from .api import question_router
+from .api import question_router, portfolio_router
 
 app = FastAPI()
 app.include_router(question_router)
+app.include_router(portfolio_router)
 
 
 if __name__ == "__main__":
