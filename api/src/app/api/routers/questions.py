@@ -24,7 +24,6 @@ async def save_answers(
     q_a = await answer_service.save_question_answers(
         question_and_answer
     )
-
     if q_a:
         return JSONResponse({"success": True})
 

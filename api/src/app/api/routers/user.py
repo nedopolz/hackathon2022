@@ -17,8 +17,11 @@ async def get_user_by_tg_id(telegram_id: str, user_service=Depends(get_user_db_s
     if not user:
         return JSONResponse(None, status_code=404)
     portfolio = await portfolio_service.get_portfolios(user.id, session=session)
-    print(portfolio)
-    return UserSchema(id=user.id, telegram_id=user.telegram_id)
+    if not portfolio:
+        portfolio = None
+    else:
+        portfolio = portfolio[0].portfolio_risk_degree
+    return UserSchema(id=user.id, telegram_id=user.telegram_id, risk_profile=portfolio)
 
 
 @router.post("/", description="Создать пользователя")
@@ -29,14 +32,3 @@ async def create_user(user: UserCreateSchema, user_service=Depends(get_user_db_s
         return JSONResponse({"success": True, "id": new_user})
 
     return JSONResponse({"success": False})
-
-
-@router.get("/risk_profile", description="Получить риск профиль пользователя")
-async def get_user_risk_profile(telegram_id: str, user_service=Depends(get_user_db_service),
-                                ):
-    user = await user_service.get_user_by_tg_id(telegram_id)
-    if not user:
-        return JSONResponse(None, status_code=404)
-
-    print(portfolio)
-    return JSONResponse({"risk_profile": portfolio[0].portfolio_risk_degree})

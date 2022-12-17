@@ -1,11 +1,10 @@
 from functools import lru_cache
 
-from sqlalchemy import select
-from sqlalchemy.ext.asyncio import AsyncSession
-
 from api.models.models import Portfolio, InstrumentPortfolio, Instrument
 from api.schemas.portfolio import PortfolioSchema, InstrumentSchema
 from db import database
+from sqlalchemy import select
+from sqlalchemy.ext.asyncio import AsyncSession
 
 
 class PortfolioService:
@@ -13,32 +12,30 @@ class PortfolioService:
         self.database = database
 
     async def get_portfolios(self, user_id: int, session: AsyncSession):
-        portfolios = await session.execute(
-            select(Portfolio, InstrumentPortfolio, Instrument).join(InstrumentPortfolio).join(Instrument).where(
-                Portfolio.user_id == user_id,
-                InstrumentPortfolio.instrument_id == Instrument.id)
-        )
-
-        portfolios_dict = {}
-        for portfolio, _, instrument in portfolios:
-            portfolios_dict.setdefault(portfolio, []).append(instrument)
+        portfolios = await session.execute(select(Portfolio).where(Portfolio.user_id == user_id))
+        portfolios = [dict(portfolio) for portfolio in portfolios]
+        for portfolio in portfolios:
+            instruments = await session.execute(select(InstrumentPortfolio, Instrument).where(
+                InstrumentPortfolio.portfolio_id == portfolio["Portfolio"].id).join(Instrument).where(
+                InstrumentPortfolio.instrument_id == Instrument.id))
+            instruments = [dict(instrument) for instrument in instruments]
+            portfolio["Portfolio"].instruments = [InstrumentSchema(**instrument) for instrument in instruments]
 
         return [
             PortfolioSchema(
-                id=portfolio.id,
-                name=portfolio.name,
-                portfolio_risk_degree=portfolio.portfolio_risk_degree,
+                id=portfolio["Portfolio"].id,
+                name=portfolio["Portfolio"].name,
+                portfolio_risk_degree=portfolio["Portfolio"].portfolio_risk_degree,
                 assets=[
                     InstrumentSchema(
-                        id=instrument.id,
-                        name=instrument.name,
-                        amount=instrument.amount,
-                        price=instrument.price
+                        id=instrument["Instrument"].id,
+                        name=instrument["Instrument"].name,
+                        amount=instrument["Instrument"].amount,
+                        price=instrument["Instrument"].price
                     )
-                    for instrument in instruments
-                ]
+                    for instrument in portfolio["Portfolio"].instruments]
             )
-            for portfolio, instruments in portfolios_dict.items()
+            for portfolio in portfolios
         ]
 
     async def create_portfolio(self, data: dict):

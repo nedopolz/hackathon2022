@@ -19,8 +19,9 @@ async def generate_portfolio(call: CallbackQuery, state: FSMContext):
         portfolio = await api.create_portfolio(call.from_user.id)
         await state.set_data(
             {"questions": questions, "answered_questions_number": 0, "answers": [], "portfolio_id": portfolio})
-
+    print('1')
     if len(data_list) > 1:
+        print('2')
         answer_id = data_list[1]
         question_id = data_list[2]
         answers = await state.get_data()
@@ -33,9 +34,10 @@ async def generate_portfolio(call: CallbackQuery, state: FSMContext):
     data = await state.get_data()
     questions = data.get("questions")
     answered_questions = data.get("answered_questions_number")
+    print('3')
     if len(questions) == answered_questions:
         risk_profile = await api.get_risk_profile(call.from_user.id)
-        await call.message.edit_text(text=RISK_PROFILE.format(risk_profile.get("name")),
+        await call.message.edit_text(text=RISK_PROFILE.format(risk_profile),
                                      reply_markup=generate_portfolio_keyboard)
         data = await state.get_data()
         answers = data.get("answers")
