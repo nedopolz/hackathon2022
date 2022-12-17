@@ -32,16 +32,16 @@ class PortfolioRisk:
     def get_goal_index(goal: str) -> float:
         if goal == "Медленное накопление":
             return 0.3
-        elif goal == "Умеренное накопление ":
+        elif goal == "Умеренное накопление":
             return 0.4
         elif goal == "Максимальная доходность":
             return 0.5
 
     def calculate(self, answers: dict):
         investment_horizon = int(answers.get("investment_horizon"))
-        age = answers.get("age")
+        age = int(answers.get("age"))
         goal = answers.get("goal")
-        obligations = answers.get("obligations")
+        obligations = answers.get("obligations") == "True"
         risk_tolerance_index = 0
         risk_tolerance_index += self.get_investment_horizon_index(investment_horizon)
         risk_tolerance_index += self.get_obligations_index(obligations)
