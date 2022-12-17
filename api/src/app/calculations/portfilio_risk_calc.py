@@ -39,9 +39,9 @@ class PortfolioRisk:
 
     def calculate(self, answers: dict):
         investment_horizon = int(answers.get("investment_horizon"))
-        age = answers.get("age")
+        age = int(answers.get("age"))
         goal = answers.get("goal")
-        obligations = answers.get("obligations")
+        obligations = answers.get("obligations") == "True"
         risk_tolerance_index = 0
         risk_tolerance_index += self.get_investment_horizon_index(investment_horizon)
         risk_tolerance_index += self.get_obligations_index(obligations)
