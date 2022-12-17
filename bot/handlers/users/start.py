@@ -21,9 +21,7 @@ async def back_query(call: CallbackQuery, state: FSMContext):
 @dp.message_handler(CommandStart(), state="*")
 async def bot_start(message: types.Message, state: FSMContext):
     if debug:
-        await message.answer("Приветствую, дорогой инвестор! Добро пожаловать в бота-помощника InvestHelper. "
-                             "Для ознакомления с работой бота нажмите на кнопку 'Инструкция'."
-                             "Желаем удачи!")
+        await message.answer("bot_start")
     user = await api.get_user_by_tg_id(message.from_user.id)
     if not user:
         full_name = message.from_user.full_name

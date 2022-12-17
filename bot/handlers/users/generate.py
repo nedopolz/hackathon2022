@@ -1,5 +1,4 @@
 from aiogram.dispatcher import FSMContext
-from aiogram.dispatcher import FSMContext
 from aiogram.types import CallbackQuery
 
 from data.config import debug
