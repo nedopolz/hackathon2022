@@ -30,9 +30,9 @@ class PortfolioRisk:
 
     @staticmethod
     def get_goal_index(goal: str) -> float:
-        if goal == "Медленное накопление":
+        if goal == "Медленное, но безопастное накопление":
             return 0.3
-        elif goal == "Умеренное накопление":
+        elif goal == "Хочу копить, но приемлю определенные риски":
             return 0.4
         elif goal == "Максимальная доходность":
             return 0.5

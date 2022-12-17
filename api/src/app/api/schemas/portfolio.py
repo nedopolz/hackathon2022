@@ -31,4 +31,4 @@ class PortfolioSchema(BaseModel):
 
 class CreatePortfolio(BaseModel):
     name: str | None = None
-    user_id: str
+    user_id: int
