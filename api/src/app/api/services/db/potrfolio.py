@@ -40,10 +40,15 @@ class PortfolioService:
             for portfolio, instruments in portfolios_dict.items()
         ]
 
-    # async def create_user(self, data: dict):
-    #     query = Portfolio.__table__.insert().values(**data)
-    #     user = await self.database.execute(query)
-    #     return user
+    async def create_portfolio(self, data: dict):
+        query = Portfolio.__table__.insert().values(**data)
+        portfolio = await self.database.execute(query)
+        return portfolio
+
+    async def del_portfolio(self, portfolio_id: int):
+        query = Portfolio.__table__.delete().where(Portfolio.id == portfolio_id)
+        portfolio = await self.database.execute(query)
+        return portfolio
 
 
 @lru_cache()

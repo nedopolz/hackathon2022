@@ -27,3 +27,8 @@ class PortfolioSchema(BaseModel):
     name: str
     portfolio_risk_degree: float
     assets: list[InstrumentSchema]
+
+
+class CreatePortfolio(BaseModel):
+    name: str | None = None
+    user_id: str
