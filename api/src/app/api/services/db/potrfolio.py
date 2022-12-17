@@ -45,6 +45,11 @@ class PortfolioService:
         portfolio = await self.database.execute(query)
         return portfolio
 
+    async def del_portfolio(self, portfolio_id: int):
+        query = Portfolio.__table__.delete().where(Portfolio.id == portfolio_id)
+        portfolio = await self.database.execute(query)
+        return portfolio
+
 
 @lru_cache()
 def get_portfolio_db_service():
