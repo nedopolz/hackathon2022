@@ -24,7 +24,7 @@ async def save_answers(
         portfolio_service=Depends(get_portfolio_db_service), session: AsyncSession = Depends(get_session)
 ):
     try:
-        q_a = await answer_service.save_question_answers(
+        qu_a = await answer_service.save_question_answers(
             question_and_answer
         )
     except:
