@@ -19,10 +19,10 @@ async def get_questions(
 
 @router.post("/save", description="Сохранить ответы на вопросы")
 async def save_answers(
-    question_and_answer: QuestionAndAnswer, answer_service=Depends(get_answer_service)
+    question_and_answer: list[QuestionAndAnswer], answer_service=Depends(get_answer_service)
 ):
-    q_a = answer_service.save_question_answer(
-        **question_and_answer.dict()
+    q_a = answer_service.save_question_answers(
+        question_and_answer
     )
 
     if q_a:

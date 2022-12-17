@@ -4,7 +4,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from api.models.models import Question, Answer, QuestionsAnswer
-from api.schemas.question import QuestionAndHisAnswer, QuestionSchema, AnswerSchema
+from api.schemas.question import QuestionAndHisAnswer, QuestionSchema, AnswerSchema, QuestionAndAnswer
 from db import database
 
 
@@ -41,6 +41,13 @@ class AnswerService:
         saved_question_answer = await self.database.execute(query)
 
         return saved_question_answer
+
+    async def save_question_answers(self, datas: list[QuestionAndAnswer]):
+        for data in datas:
+            query = QuestionsAnswer.__table__.insert().values(
+                answer_id=data.answer_id, question_id=data.question_id, portfolio_id=data.portfolio_id
+            )
+            saved_question_answer = await self.database.execute(query)
 
 
 @lru_cache()
