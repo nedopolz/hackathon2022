@@ -77,3 +77,6 @@ class InstrumentCalc:
             risk_instrument_index += self.get_eps_percent(eps_percent)
             risk_instrument_index += self.get_company_stonks_percent(company_stonks_percent)
         return risk_instrument_index
+
+
+ic = InstrumentCalc()

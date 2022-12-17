@@ -5,6 +5,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from api.models.models import Portfolio, InstrumentPortfolio, Instrument, QuestionsAnswer, Question, Answer
 from api.schemas.portfolio import PortfolioSchema, InstrumentSchema
+from calculations.instrument_calc import ic
 from db import database
 from calculations.portfilio_risk_calc import pr
 
@@ -69,6 +70,28 @@ class PortfolioService:
         return portfolio
 
 
+class InstrumentService:
+    def __init__(self):
+        self.database = database
+
+    async def set_instrument_degree(self, instrument_id: int, session: AsyncSession):
+        instrument = await session.execute(
+            select(Instrument).where(Instrument.id == instrument_id)
+        )
+        data = [instr[0].data[0] for instr in instrument][0]
+        instrument_degree = ic.instruments_risk_calculate(data)
+
+        query = Instrument.__table__.update().values(instrument_degree=instrument_degree).where(
+            Instrument.id == instrument_id)
+        instrument = await self.database.execute(query)
+        return instrument
+
+
 @lru_cache()
 def get_portfolio_db_service():
     return PortfolioService()
+
+
+@lru_cache()
+def get_instrument_db_service():
+    return InstrumentService()
