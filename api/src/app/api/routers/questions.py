@@ -21,7 +21,7 @@ async def get_questions(
 async def save_answers(
     question_and_answer: list[QuestionAndAnswer], answer_service=Depends(get_answer_service)
 ):
-    q_a = answer_service.save_question_answers(
+    q_a = await answer_service.save_question_answers(
         question_and_answer
     )
 

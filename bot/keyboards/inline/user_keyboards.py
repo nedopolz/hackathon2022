@@ -35,6 +35,6 @@ def generate_answers_keyboard(answers, question_id):
     keyboard = InlineKeyboardMarkup()
     for answer in answers:
         keyboard.add(
-            InlineKeyboardButton(text=answer.get("text"), callback_data=f"generate_portfolio:{answer.get('id')}:{question_id}"))
+            InlineKeyboardButton(text=answer.get("answer"), callback_data=f"generate_portfolio:{answer.get('id')}:{question_id}"))
     keyboard.add(back_button)
     return keyboard

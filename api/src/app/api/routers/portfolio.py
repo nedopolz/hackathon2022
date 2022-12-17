@@ -25,7 +25,7 @@ async def create_portfolio(
     data = portfolio.dict()
     new_portfolio = await portfolio_service.create_portfolio(data)
     if new_portfolio:
-        return JSONResponse({"success": True, "id": new_portfolio.id})
+        return JSONResponse({"success": True, "id": new_portfolio})
 
     return JSONResponse({"success": False})
 
