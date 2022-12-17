@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "rpa"
+version = "0.1.0"
+description = ""
+authors = ["RakhmatullinAK"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+sqlalchemy = "1.4.41"
+python-dotenv = "^0.21.0"
+databases = "^0.6.2"
+tinkoff-investments = "^0.2.0b43"
+asyncpg = "^0.27.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

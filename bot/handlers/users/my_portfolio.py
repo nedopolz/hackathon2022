@@ -14,8 +14,7 @@ async def my_portfolio(call: CallbackQuery):
     if not portfolio:
         await call.message.edit_text("Генерация в процессе погодь малех", reply_markup=generate_portfolio_keyboard)
         return
-    assets = portfolio.get("assets")
     text = "Ваш портфель:\n"
-    for asset in assets:
-        text += f"{asset.get('name')} - {asset.get('amount')} - {asset.get('total_price')}\n"
+    for asset in portfolio:
+        text += f"{asset.get('name')} - {asset.get('amount')} - {asset.get('price')*asset.get('amount')}\n"
     await call.message.edit_text(text=text, reply_markup=back_keyboard)

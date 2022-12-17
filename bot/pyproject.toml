@@ -10,6 +10,7 @@ python = "^3.10"
 aiogram = "^2.23.1"
 aioredis = "^2.0.1"
 python-dotenv = "^0.21.0"
+protobuf = "^4.21.12"
 
 
 [build-system]
