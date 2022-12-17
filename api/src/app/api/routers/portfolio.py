@@ -4,7 +4,7 @@ from starlette import status
 from starlette.responses import JSONResponse
 
 from api.schemas.portfolio import CreatePortfolio
-from api.services.db.potrfolio import get_portfolio_db_service
+from api.services.db.potrfolio import get_portfolio_db_service, get_instrument_db_service
 from api.services.db.session import get_session
 
 router = APIRouter(prefix="/portfolio", tags=["Portfolio"])
@@ -41,3 +41,8 @@ async def delete_portfolio(portfolio_id: int, portfolio_service=Depends(get_port
 @router.put("/{portfolio_id}", description="Изменить портфель пользователя")
 async def put_portfolio():
     pass
+
+
+@router.post("/calc_instrument_degree")
+async def calc_instrument_degree(i_s=Depends(get_instrument_db_service), session: AsyncSession = Depends(get_session)):
+    await i_s.set_instrument_degree(session)
