@@ -60,13 +60,13 @@ class Portfolio(Base):
     question_answer = relationship("QuestionsAnswer", back_populates="portfolio")
 
 
-class InstrumentType(Base):
-    __tablename__ = "instrument_type"
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    name = Column(String)
-    instrument_type_risk_degree = Column(Float)
-
-    instrument = relationship("Instrument", back_populates="instrument_type")
+# class InstrumentType(Base):
+#     __tablename__ = "instrument_type"
+#     id = Column(Integer, primary_key=True, autoincrement=True)
+#     name = Column(String)
+#     instrument_type_risk_degree = Column(Float)
+#
+#     instrument = relationship("Instrument", back_populates="instrument_type")
 
 
 class Instrument(Base):
@@ -74,12 +74,12 @@ class Instrument(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String)
     instrument_degree = Column(Float)
-    instrument_type_id = Column(Integer, ForeignKey("instrument_type.id"), nullable=False)
+    # instrument_type_id = Column(Integer, ForeignKey("instrument_type.id"), nullable=False)
     amount = Column(Integer)
     price = Column(Float)
     data = Column(JSON)
     instrument_portfolio = relationship("InstrumentPortfolio", back_populates="instrument")
-    instrument_type = relationship("InstrumentType", back_populates="instrument")
+    # instrument_type = relationship("InstrumentType", back_populates="instrument")
 
 
 class InstrumentPortfolio(Base):
