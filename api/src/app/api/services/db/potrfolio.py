@@ -9,6 +9,8 @@ from calculations.instrument_calc import ic
 from db import database
 from calculations.portfilio_risk_calc import pr
 
+from src.app.calculations.portfoli_calc import pg
+
 
 class PortfolioService:
     def __init__(self):
@@ -42,6 +44,11 @@ class PortfolioService:
             for portfolio in portfolios
         ]
 
+    async def get_portfolio(self, portfolio_id: int, session: AsyncSession):
+        portfolios = await session.execute(select(Portfolio).where(Portfolio.id == portfolio_id))
+        portfolios = [dict(portfolio) for portfolio in portfolios]
+        return portfolios[0]["Portfolio"]
+
     async def create_portfolio(self, data: dict):
         query = Portfolio.__table__.insert().values(**data)
         portfolio = await self.database.execute(query)
@@ -67,6 +74,20 @@ class PortfolioService:
             Portfolio.id == portfolio_id)
         portfolio = await self.database.execute(query)
         return portfolio
+
+    async def generate_portfolio(self, portfolio_id: int, session: AsyncSession):
+        instruments = await session.execute(select(Instrument))
+        instruments = [dict(instrument) for instrument in instruments]
+        instruments = [instrument["Instrument"] for instrument in instruments]
+        instruments = [{"instrument_degree": instrument.instrument_degree,
+                        "price": instrument.price,
+                        "id": instrument.id
+                        } for instrument in instruments]
+        personal_risk_index = await self.get_portfolio(portfolio_id, session)
+        personal_risk_index = personal_risk_index.acceptable_risk_degree
+        investment_amount = 100000
+        data = pg.generate(personal_risk_index, instruments, investment_amount)
+        return data
 
 
 class InstrumentService:

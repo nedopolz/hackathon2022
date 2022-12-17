@@ -56,8 +56,5 @@ class APIManager:
             return "Средний риск"
         return "Высокий риск"
 
-    async def get_portfolio(self, user_id):
-        return {"id": "1", "name": "Portfolio 1", "risk_profile": "1",
-                "assets": [{"id": "1", "name": "apple", "amount": "10", "total_price": "200"},
-                           {"id": "2", "name": "google", "amount": "10", "total_price": "200"},
-                           {"id": "3", "name": "Газпром", "amount": "10", "total_price": "200"}]}
+    async def get_portfolio(self, portfolio_id):
+        return await self.make_request('GET', f'{self.api_url}portfolio/generate_portfolio/{portfolio_id}')

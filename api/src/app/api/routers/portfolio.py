@@ -1,11 +1,10 @@
+from api.schemas.portfolio import CreatePortfolio
+from api.services.db.potrfolio import get_portfolio_db_service, get_instrument_db_service
+from api.services.db.session import get_session
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 from starlette import status
 from starlette.responses import JSONResponse
-
-from api.schemas.portfolio import CreatePortfolio
-from api.services.db.potrfolio import get_portfolio_db_service, get_instrument_db_service
-from api.services.db.session import get_session
 
 router = APIRouter(prefix="/portfolio", tags=["Portfolio"])
 
@@ -46,3 +45,10 @@ async def put_portfolio():
 @router.post("/calc_instrument_degree")
 async def calc_instrument_degree(i_s=Depends(get_instrument_db_service), session: AsyncSession = Depends(get_session)):
     await i_s.set_instrument_degree(session)
+
+
+@router.post("/generate_portfolio/{portfolio_id}")
+async def generate_portfolio(portfolio_id: int, session: AsyncSession = Depends(get_session),
+                             portfolio_service=Depends(get_portfolio_db_service)):
+    data = await portfolio_service.generate_portfolio(portfolio_id, session)
+    return data
