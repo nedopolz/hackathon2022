@@ -1,6 +1,8 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
+from starlette.responses import JSONResponse
 
+from api.schemas.portfolio import CreatePortfolio
 from api.services.db.potrfolio import get_portfolio_db_service
 from api.services.db.session import get_session
 
@@ -16,8 +18,15 @@ async def get_portfolio(
 
 
 @router.post("/", description="Создать портфель пользователя")
-async def create_portfolio():
-    pass
+async def create_portfolio(
+        portfolio: CreatePortfolio, portfolio_service=Depends(get_portfolio_db_service)
+):
+    data = portfolio.dict()
+    new_portfolio = await portfolio_service.create_portfolio(data)
+    if new_portfolio:
+        return JSONResponse({"success": True, "id": new_portfolio.id})
+
+    return JSONResponse({"success": False})
 
 
 @router.delete("/", description="Удалить портфель пользователя")
