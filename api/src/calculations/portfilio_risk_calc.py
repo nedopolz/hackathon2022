@@ -37,7 +37,7 @@ class PortfolioRisk:
         elif goal == "Максимальная доходность":
             return 0.5
 
-    def calculate(self, portfolio_id, answers: dict):
+    def calculate(self, answers: dict):
         investment_horizon = int(answers.get("investment_horizon"))
         age = answers.get("age")
         goal = answers.get("goal")
@@ -51,4 +51,4 @@ class PortfolioRisk:
 
 
 pr = PortfolioRisk()
-print(pr.calculate(1, {"investment_horizon": 1, "age": 38, "goal": "Медленное накопление", "obligations": False}))
+print(pr.calculate({"investment_horizon": 1, "age": 38, "goal": "Медленное накопление", "obligations": False}))
