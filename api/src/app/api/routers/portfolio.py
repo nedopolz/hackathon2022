@@ -14,7 +14,7 @@ router = APIRouter(prefix="/portfolio", tags=["Portfolio"])
 async def get_portfolio(
         user_id: int, portfolio_service=Depends(get_portfolio_db_service), session: AsyncSession = Depends(get_session)
 ):
-    portfolios = await portfolio_service.get_portfolio(user_id, session)
+    portfolios = await portfolio_service.get_portfolios(user_id, session)
     return portfolios
 
 
@@ -38,6 +38,6 @@ async def delete_portfolio(portfolio_id: int, portfolio_service=Depends(get_port
     return JSONResponse({"status": "not found"}, status_code=status.HTTP_404_NOT_FOUND)
 
 
-@router.put("/", description="Изменить портфель пользователя")
+@router.put("/{portfolio_id}", description="Изменить портфель пользователя")
 async def put_portfolio():
     pass
