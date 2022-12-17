@@ -24,9 +24,10 @@ class InstrumentRiskDegree(InstrumentSchema):
 
 class PortfolioSchema(BaseModel):
     id: int
-    name: str
-    portfolio_risk_degree: float
+    name: str | None
+    portfolio_risk_degree: float | None
     assets: list[InstrumentSchema]
+    acceptable_risk_degree: float | None
 
 
 class CreatePortfolio(BaseModel):

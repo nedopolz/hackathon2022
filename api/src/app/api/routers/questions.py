@@ -23,6 +23,7 @@ async def save_answers(
         question_and_answer: list[QuestionAndAnswer], answer_service=Depends(get_answer_service),
         portfolio_service=Depends(get_portfolio_db_service), session: AsyncSession = Depends(get_session)
 ):
+
     try:
         qu_a = await answer_service.save_question_answers(
             question_and_answer

@@ -44,9 +44,17 @@ class APIManager:
         await self.make_request('POST', f'{self.api_url}questions/save', data=data)
 
     async def get_risk_profile(self, user_id):
-        data = await self.make_request('GET', f'{self.api_url}user/{tg_id}')
-        print(data)
-        return random.choice(data)
+        data = await self.make_request('GET', f'{self.api_url}user/{user_id}')
+        if not data["risk_profile"]:
+            return None
+        risk_profile = float(data["risk_profile"])
+        if risk_profile < 0.4:
+            return "Самый низкий риск"
+        if risk_profile < 0.6:
+            return "Низкий риск"
+        if risk_profile < 0.8:
+            return "Средний риск"
+        return "Высокий риск"
 
     async def get_portfolio(self, user_id):
         return {"id": "1", "name": "Portfolio 1", "risk_profile": "1",
