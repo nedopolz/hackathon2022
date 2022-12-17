@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, MetaData, Float
+from sqlalchemy import Column, Integer, String, ForeignKey, MetaData, Float, JSON
 from sqlalchemy.orm import declarative_base, relationship
 
 from sqlalchemy import MetaData
@@ -77,7 +77,7 @@ class Instrument(Base):
     instrument_type_id = Column(Integer, ForeignKey("instrument_type.id"), nullable=False)
     amount = Column(Integer)
     price = Column(Float)
-
+    data = Column(JSON)
     instrument_portfolio = relationship("InstrumentPortfolio", back_populates="instrument")
     instrument_type = relationship("InstrumentType", back_populates="instrument")
 

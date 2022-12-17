@@ -44,11 +44,8 @@ class APIManager:
         await self.make_request('POST', f'{self.api_url}questions/save', data=data)
 
     async def get_risk_profile(self, user_id):
-        data = [
-            {"id": "1", "name": "Низкая толерантность к риску"},
-            {"id": "2", "name": "Умеренная толерантность к риску"},
-            {"id": "3", "name": "Высокая толерантность к риску"},
-        ]
+        data = await self.make_request('GET', f'{self.api_url}user/{tg_id}')
+        print(data)
         return random.choice(data)
 
     async def get_portfolio(self, user_id):

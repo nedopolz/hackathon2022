@@ -15,7 +15,8 @@ class PortfolioService:
     async def get_portfolios(self, user_id: int, session: AsyncSession):
         portfolios = await session.execute(
             select(Portfolio, InstrumentPortfolio, Instrument).join(InstrumentPortfolio).join(Instrument).where(
-                Portfolio.user_id == user_id)
+                Portfolio.user_id == user_id,
+                InstrumentPortfolio.instrument_id == Instrument.id)
         )
 
         portfolios_dict = {}
