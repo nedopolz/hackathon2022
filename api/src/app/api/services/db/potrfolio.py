@@ -73,17 +73,18 @@ class InstrumentService:
     def __init__(self):
         self.database = database
 
-    async def set_instrument_degree(self, instrument_id: int, session: AsyncSession):
-        instrument = await session.execute(
-            select(Instrument).where(Instrument.id == instrument_id)
+    async def set_instrument_degree(self, session: AsyncSession):
+        instruments = await session.execute(
+            select(Instrument)
         )
-        data = [instr[0].data[0] for instr in instrument][0]
-        instrument_degree = ic.instruments_risk_calculate(data)
 
-        query = Instrument.__table__.update().values(instrument_degree=instrument_degree).where(
-            Instrument.id == instrument_id)
-        instrument = await self.database.execute(query)
-        return instrument
+        for instrument in instruments:
+            data = instrument[0].data[0]
+            instrument_degree = ic.instruments_risk_calculate(data)
+
+            query = Instrument.__table__.update().values(instrument_degree=instrument_degree).where(
+                Instrument.id == instrument[0].id)
+            instrument = await self.database.execute(query)
 
 
 @lru_cache()

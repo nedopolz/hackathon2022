@@ -8,7 +8,7 @@ class InstrumentCalc:
 
     @staticmethod
     def get_debt_div_eq(percent: str) -> float:
-        percent = int(percent.replace('%', ''))
+        percent = float(percent.replace('%', ''))
         if 0 < percent <= 20:
             return 0
         elif 20 < percent <= 40:
@@ -41,7 +41,7 @@ class InstrumentCalc:
 
     @staticmethod
     def get_eps_percent(percent: str) -> float:
-        percent = int(percent.replace('%', ''))
+        percent = float(percent.replace('%', ''))
         if 20 < percent <= 30:
             return 0.1
         elif 30 < percent <= 50:
@@ -53,7 +53,7 @@ class InstrumentCalc:
 
     @staticmethod
     def get_company_stonks_percent(percent: str) -> float:
-        percent = int(percent.replace('%', ''))
+        percent = float(percent.replace('%', ''))
         if 20 < percent <= 30:
             return 0.1
         elif 30 < percent <= 50:
@@ -64,14 +64,14 @@ class InstrumentCalc:
             return 0
 
     def instruments_risk_calculate(self, instrument_stats: dict):
-        instrument = instrument_stats.get("instrument")
+        instrument = instrument_stats.get("type")
         risk_instrument_index = 0
         risk_instrument_index += self.get_investment_instrument(instrument)
         if instrument == "share":
-            debt_div_eq = instrument_stats.get("debt_div_eq")
-            p_div_e = instrument_stats.get("p_div_e")
-            eps_percent = instrument_stats.get("eps_percent")
-            company_stonks_percent = instrument_stats.get("company_stonks_percent")
+            debt_div_eq = instrument_stats.get("de/eq")
+            p_div_e = instrument_stats.get("p/e")
+            eps_percent = instrument_stats.get("eps")
+            company_stonks_percent = instrument_stats.get("stonks")
             risk_instrument_index += self.get_debt_div_eq(debt_div_eq)
             risk_instrument_index += self.get_p_div_e(p_div_e)
             risk_instrument_index += self.get_eps_percent(eps_percent)
