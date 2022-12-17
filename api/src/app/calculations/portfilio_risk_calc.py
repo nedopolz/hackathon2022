@@ -2,29 +2,30 @@
 class PortfolioRisk:
     @staticmethod
     def get_investment_horizon_index(investment_horizon: int) -> float:
-        if investment_horizon < 1:
+        if investment_horizon == "менее года":
             return 0.3
-        elif investment_horizon < 3:
+        elif investment_horizon == "1-3 года":
             return 0.2
-        elif investment_horizon < 5:
+        elif investment_horizon == "3-5 лет":
             return 0.15
-        elif investment_horizon < 10:
+        elif investment_horizon == "5-10 лет":
             return 0.1
         return 0
 
     @staticmethod
-    def get_obligations_index(obligations: bool) -> float:
-        if obligations:
+    def get_obligations_index(obligations: str) -> float:
+        if obligations == "да(":
             return -0.2
-        return 0.0
+        return 0
+
 
     @staticmethod
     def get_age_index(age: int) -> float:
-        if age < 30:
+        if age == "18-30":
             return 0.2
-        elif age < 40:
+        elif age == "31-40":
             return 0.15
-        elif age < 50:
+        elif age == "41-50":
             return 0.1
         return 0
 
@@ -38,10 +39,10 @@ class PortfolioRisk:
             return 0.5
 
     def calculate(self, answers: dict):
-        investment_horizon = int(answers.get("investment_horizon"))
-        age = int(answers.get("age"))
-        goal = answers.get("goal")
-        obligations = answers.get("obligations") == "True"
+        investment_horizon = answers.get("На какой срок планируете инвестировать")
+        age = answers.get("Укажите ваш возраст")
+        goal = answers.get("Какие у вас цели инвестирования?")
+        obligations = answers.get("Есть ли у вас семья, которую вы должны обеспечивать или какие-нибудь долговые обязательства(кредиты, ипотека и т.п.)?") == "True"
         risk_tolerance_index = 0
         risk_tolerance_index += self.get_investment_horizon_index(investment_horizon)
         risk_tolerance_index += self.get_obligations_index(obligations)
@@ -51,4 +52,3 @@ class PortfolioRisk:
 
 
 pr = PortfolioRisk()
-print(pr.calculate({"investment_horizon": 1, "age": 38, "goal": "Медленное накопление", "obligations": False}))

@@ -20,7 +20,7 @@ async def get_user_by_tg_id(telegram_id: str, user_service=Depends(get_user_db_s
     if not portfolio:
         portfolio = None
     else:
-        portfolio = portfolio[0].portfolio_risk_degree
+        portfolio = portfolio[0].acceptable_risk_degree
     return UserSchema(id=user.id, telegram_id=user.telegram_id, risk_profile=portfolio)
 
 

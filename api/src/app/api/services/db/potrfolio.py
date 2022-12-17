@@ -28,6 +28,7 @@ class PortfolioService:
                 id=portfolio["Portfolio"].id,
                 name=portfolio["Portfolio"].name,
                 portfolio_risk_degree=portfolio["Portfolio"].portfolio_risk_degree,
+                acceptable_risk_degree=portfolio["Portfolio"].acceptable_risk_degree,
                 assets=[
                     InstrumentSchema(
                         id=instrument["Instrument"].id,
@@ -61,7 +62,6 @@ class PortfolioService:
 
         q_a = {question.question: answer.answer for _, _, question, answer in portfolio}
         acceptable_risk_degree = pr.calculate(q_a)
-
         query = Portfolio.__table__.update().values(acceptable_risk_degree=acceptable_risk_degree).where(
             Portfolio.id == portfolio_id)
         portfolio = await self.database.execute(query)
